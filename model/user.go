@@ -9,6 +9,6 @@ type User struct{
 	TinggiBadan	int			`gorm:"type:double"`
 	BeratBadan	int			`gorm:"type:double"`
 	Usia		int			`gorm:"type:int(11)"`
-	IsAdmin		bool		`gorm:"type:tinyint(1)"`
+	IsAdmin		bool		`gorm:"type:tinyint(1);default:0"`
 	History		[]History
 }

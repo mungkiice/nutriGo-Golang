@@ -1,4 +1,4 @@
-package main
+package migration
 
 import (
 	"github.com/mungkiice/goNutri/database"
@@ -6,7 +6,7 @@ import (
 	"log"
 )
 
-func main(){
+func Up(){
 	defer database.DB.Close()
 	db := database.DB.AutoMigrate(
 		&model.User{},
