@@ -5,18 +5,18 @@ import (
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 	"github.com/mungkiice/goNutri/config"
+	"github.com/spf13/viper"
 )
 
 var DB *gorm.DB
 
 func init() {
-	config := config.Configuration
-	dbURL := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?parseTime=true",
-		config.Database.Username,
-		config.Database.Password,
-		config.Database.Hostname,
-		config.Database.Port,
-		config.Database.Name)
+	dbURL := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?parseTime=true",
+		viper.GetString("database.username"),
+		viper.GetString("database.password"),
+		viper.GetString("database.hostname"),
+		viper.GetInt("database.port"),
+		viper.GetString("database.name"))
 
 	db, err := gorm.Open("mysql", dbURL)
 
