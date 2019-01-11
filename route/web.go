@@ -2,24 +2,48 @@ package route
 
 import (
 	"github.com/gin-contrib/multitemplate"
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 	"github.com/mungkiice/goNutri/handler"
+	"github.com/mungkiice/goNutri/middleware"
+	"github.com/spf13/viper"
+	"log"
 )
 
-func NewRouter() *gin.Engine{
-	Router := gin.Default()
-	Router.HTMLRender = loadTemplates("./web/view")
-	Router.Static("/public", "./web/public")
+func Run() error{
+	router := gin.Default()
 
+	viper.SetConfigFile("./config.json")
+	if err := viper.ReadInConfig(); err != nil {
+		log.Fatal(err)
+	}
 
-	Router.GET("/", handler.HomePage)
-	Router.GET("/polamakan", handler.PolaMakanPage)
-	Router.GET("/nutrisi", handler.NutrisiPage)
-	Router.GET("/beratbadan", handler.BeratBadanPage)
-	Router.GET("/formInput", handler.MainFormPage)
-	Router.GET("login", handler.LoginPage)
-	Router.GET("/register", handler.RegisterPage)
-	return Router
+	store := cookie.NewStore([]byte(viper.GetString("app_key")))
+	router.Use(sessions.Sessions(viper.GetString("app_name"), store))
+
+	//router.Use(cors.Default())
+	router.Use(middleware.Secure())
+
+	router.HTMLRender = loadTemplates("./web/view")
+	router.Static("/public", "./web/public")
+
+	router.GET("/", handler.HomePage)
+	router.GET("/polamakan", middleware.WebAuth(), handler.PolaMakanPage)
+	router.GET("/nutrisi", middleware.WebAuth(), handler.NutrisiPage)
+	router.GET("/beratbadan", handler.BeratBadanPage)
+	router.GET("/formInput", handler.MainFormPage)
+	router.GET("login", middleware.Guest(), handler.LoginPage)
+	router.GET("/register", handler.RegisterPage)
+	router.POST("/login", handler.DoLogin)
+	router.POST("/logout", handler.DoLogout)
+	router.GET("/cekcek", func(c *gin.Context) {
+		c.String(200, c.Request.URL.Path)
+	})
+	//csrf := nosurf.New(router)
+
+	//return http.ListenAndServe(":8000", csrf)
+	return router.Run(":8000")
 }
 
 func loadTemplates(templatesDir string) multitemplate.Renderer {
