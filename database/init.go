@@ -4,13 +4,18 @@ import (
 	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"github.com/mungkiice/goNutri/config"
 	"github.com/spf13/viper"
+	"log"
 )
 
 var DB *gorm.DB
 
 func init() {
+	viper.SetConfigFile("./config.json")
+	if err := viper.ReadInConfig(); err != nil {
+		log.Fatal(err)
+	}
+
 	dbURL := fmt.Sprintf("%s:%s@tcp(%s:%d)/%s?parseTime=true",
 		viper.GetString("database.username"),
 		viper.GetString("database.password"),
