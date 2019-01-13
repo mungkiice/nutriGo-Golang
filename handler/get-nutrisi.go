@@ -3,20 +3,13 @@ package handler
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"log"
-	"net/http"
-	. "github.com/mungkiice/goNutri/database"
+	"github.com/mungkiice/goNutri/middleware/auth"
 	. "github.com/mungkiice/goNutri/model"
+	"net/http"
 )
 
 func NutrisiPage(c *gin.Context){
-	var user User
-	userID := c.MustGet("userID").(uint)
-	if  userID != 0 {
-		if err := DB.First(&user, userID).Error; err != nil{
-			log.Fatal(err)
-		}
-	}
+	user := auth.User(c)
 
 	c.HTML(http.StatusOK, "nutrisi_page", gin.H{
 		"user" : user,
@@ -25,7 +18,7 @@ func NutrisiPage(c *gin.Context){
 	})
 }
 
-func getNutrisi(user User)map[string]interface{}{
+func getNutrisi(user *User)map[string]interface{}{
 	beratIdeal := getKondisi(user)["beratIdeal"]
 	var kebutuhanBasal float64
 	if user.Gender == "laki-laki" {

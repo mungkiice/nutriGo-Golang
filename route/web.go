@@ -7,6 +7,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/mungkiice/goNutri/handler"
 	"github.com/mungkiice/goNutri/middleware"
+	"github.com/mungkiice/goNutri/middleware/auth"
 	"github.com/spf13/viper"
 	"log"
 )
@@ -29,18 +30,18 @@ func Run() error{
 	router.Static("/public", "./web/public")
 
 	router.GET("/", handler.HomePage)
-	router.GET("/polamakan", middleware.WebAuth(), handler.PolaMakanPage)
-	router.GET("/nutrisi", middleware.WebAuth(), handler.NutrisiPage)
-	router.GET("/beratbadan", middleware.WebAuth(), handler.BeratBadanPage)
-	router.GET("/forminput", middleware.WebAuth(), handler.MainFormPage)
-	router.GET("login", middleware.Guest(), handler.LoginPage)
-	router.GET("/register", middleware.Guest(), handler.RegisterPage)
-	router.GET("/profile/:profileID/history", middleware.WebAuth(), handler.ProfilePageWithHistory)
-	router.GET("/profile/:profileID", middleware.WebAuth(), handler.ProfilePage)
-	router.POST("/login", middleware.Guest(), handler.DoLogin)
-	router.POST("/logout", middleware.WebAuth(), handler.DoLogout)
-	router.POST("/register", middleware.Guest(), handler.DoRegister)
-	router.POST("/forminput", middleware.WebAuth(), handler.UpdateTinggiBadan)
+	router.GET("/polamakan", auth.Web(), handler.PolaMakanPage)
+	router.GET("/nutrisi", auth.Web(), handler.NutrisiPage)
+	router.GET("/beratbadan", auth.Web(), handler.BeratBadanPage)
+	router.GET("/forminput", auth.Web(), handler.MainFormPage)
+	router.GET("login", auth.Guest(), handler.LoginPage)
+	router.GET("/register", auth.Guest(), handler.RegisterPage)
+	router.GET("/profile/:profileID/history", auth.Web(), handler.ProfilePageWithHistory)
+	router.GET("/profile/:profileID", auth.Web(), handler.ProfilePage)
+	router.POST("/login", auth.Guest(), handler.DoLogin)
+	router.POST("/logout", auth.Web(), handler.DoLogout)
+	router.POST("/register", auth.Guest(), handler.DoRegister)
+	router.POST("/forminput", auth.Web(), handler.UpdateTinggiBadan)
 	//csrf := nosurf.New(router)
 
 	//return http.ListenAndServe(":8000", csrf)

@@ -4,20 +4,15 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
 	. "github.com/mungkiice/goNutri/database"
+	"github.com/mungkiice/goNutri/middleware/auth"
 	. "github.com/mungkiice/goNutri/model"
 	"log"
 	"net/http"
 )
 
 func PolaMakanPage(c *gin.Context){
-	var user User
 	var pola Pola
-	userID := c.MustGet("userID").(uint)
-	if  userID != 0 {
-		if err := DB.First(&user, userID).Error; err != nil{
-			log.Fatal(err)
-		}
-	}
+	user := auth.User(c)
 	nutrisi := getNutrisi(user)
 	err := DB.Preload("Makanans").
 		Where("lemak_total BETWEEN ? AND ? AND protein_total BETWEEN ? AND ? AND karbohidrat_total BETWEEN ? AND ?",
@@ -31,7 +26,7 @@ func PolaMakanPage(c *gin.Context){
 
 	if err == nil || err != gorm.ErrRecordNotFound{
 		if err = DB.Create(&History{
-			UserID: userID,
+			UserID: user.ID,
 			PolaID: pola.ID,
 			TinggiBadan: user.TinggiBadan,
 			BeratBadan: user.BeratBadan,

@@ -2,21 +2,14 @@ package handler
 
 import (
 	"github.com/gin-gonic/gin"
-	"log"
-	"net/http"
 	. "github.com/mungkiice/goNutri/database"
+	"github.com/mungkiice/goNutri/middleware/auth"
 	. "github.com/mungkiice/goNutri/model"
+	"net/http"
 )
 
 func ProfilePage(c *gin.Context){
-	var user User
-
-	userID := c.MustGet("userID").(uint)
-	if  userID != 0 {
-		if err := DB.First(&user, userID).Error; err != nil{
-			log.Fatal(err)
-		}
-	}
+	user := auth.User(c)
 	c.HTML(http.StatusOK, "profile_page", gin.H{
 		"user": user,
 		"isLoggedIn": true,
@@ -24,18 +17,11 @@ func ProfilePage(c *gin.Context){
 }
 
 func ProfilePageWithHistory(c *gin.Context){
-	var user User
 	var histories []History
 	var history History
 
-	userID := c.MustGet("userID").(uint)
-	if  userID != 0 {
-		if err := DB.First(&user, userID).Error; err != nil{
-			log.Fatal(err)
-		}
-	}
-
-	DB.Model(&user).Related(&histories).Last(&history)
+	user := auth.User(c)
+	DB.Model(user).Related(&histories).Last(&history)
 	DB.Preload("Pola.Makanans").Preload("Pola").Find(&history)
 	c.HTML(http.StatusOK, "profile_page", gin.H{
 		"user": user,
