@@ -5,5 +5,9 @@ type Pola struct{
 	LemakTotal			float64		`gorm:"type:double"`
 	ProteinTotal		float64		`gorm:"type:double"`
 	KarbohidratTotal	float64		`gorm:"type:double"`
-	Makanan				[]Makanan	`gorm:"many2many:pola_makan"`
+	Makanans			[]Makanan	`gorm:"many2many:pola_makan"`
+}
+
+func (Pola) TableName() string{
+	return "pola"
 }

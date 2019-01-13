@@ -101,7 +101,7 @@
 </head>
 <body>
 
-{{template "nav"}}
+{{template "nav" .}}
 
 <div class="container">
     <div class="row">
@@ -131,22 +131,22 @@
                             <tbody>
                             <tr>
                                 <td>Karbohidrat</td>
-                                {{/*<td>{{$nutrisi->karbohidratMin}} gram - {{$nutrisi->karbohidratMaks}} gram</td>*/}}
+                                <td>{{.data.minKarbo}} gram - {{.data.maxKarbo}} gram</td>
                                 {{/*{{-- <td></td> --}}*/}}
                             </tr>
                             <tr>
                                 <td>Protein</td>
-                                {{/*<td>{{$nutrisi->proteinMin}} gram - {{$nutrisi->proteinMaks}} gram</td>*/}}
+                                <td>{{.data.minProtein}} gram - {{.data.maxProtein}} gram</td>
                                 {{/*{{-- <td> - </td> --}}*/}}
                             </tr>
                             <tr>
                                 <td>Lemak</td>
-                                {{/*<td>{{$nutrisi->lemakMin}} gram - {{$nutrisi->lemakMaks}} gram</td>*/}}
+                                <td>{{.data.minLemak}} gram - {{.data.maxLemak}} gram</td>
                                 {{/*{{-- <td> - </td> --}}*/}}
                             </tr>
                             <tr>
                                 <td>Kalori</td>
-                                {{/*<td>{{$nutrisi->totalKaloriPerHari}} Kkal</td>*/}}
+                                <td>{{.data.totalKaloriPerhari}} Kkal</td>
                                 {{/*{{-- <td> - </td> --}}*/}}
                             </tr>
                             </tbody>

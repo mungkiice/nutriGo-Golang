@@ -8,3 +8,7 @@ type Makanan struct{
 	Karbohidrat	float64	`gorm:"type:double"`
 	Pola		[]Pola	`gorm:"many2many:pola_makan"`
 }
+
+func (Makanan) TableName() string{
+	return "makanan"
+}

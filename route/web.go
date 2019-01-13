@@ -31,15 +31,16 @@ func Run() error{
 	router.GET("/", handler.HomePage)
 	router.GET("/polamakan", middleware.WebAuth(), handler.PolaMakanPage)
 	router.GET("/nutrisi", middleware.WebAuth(), handler.NutrisiPage)
-	router.GET("/beratbadan", handler.BeratBadanPage)
-	router.GET("/formInput", handler.MainFormPage)
+	router.GET("/beratbadan", middleware.WebAuth(), handler.BeratBadanPage)
+	router.GET("/forminput", middleware.WebAuth(), handler.MainFormPage)
 	router.GET("login", middleware.Guest(), handler.LoginPage)
-	router.GET("/register", handler.RegisterPage)
-	router.POST("/login", handler.DoLogin)
-	router.POST("/logout", handler.DoLogout)
-	router.GET("/cekcek", func(c *gin.Context) {
-		c.String(200, c.Request.URL.Path)
-	})
+	router.GET("/register", middleware.Guest(), handler.RegisterPage)
+	router.GET("/profile/:profileID/history", middleware.WebAuth(), handler.ProfilePageWithHistory)
+	router.GET("/profile/:profileID", middleware.WebAuth(), handler.ProfilePage)
+	router.POST("/login", middleware.Guest(), handler.DoLogin)
+	router.POST("/logout", middleware.WebAuth(), handler.DoLogout)
+	router.POST("/register", middleware.Guest(), handler.DoRegister)
+	router.POST("/forminput", middleware.WebAuth(), handler.UpdateTinggiBadan)
 	//csrf := nosurf.New(router)
 
 	//return http.ListenAndServe(":8000", csrf)
@@ -55,5 +56,6 @@ func loadTemplates(templatesDir string) multitemplate.Renderer {
 	r.AddFromFiles("mainform_page", templatesDir + "/main-form.html", templatesDir + "/nav.html")
 	r.AddFromFiles("login_page", templatesDir + "/login.html", templatesDir + "/nav.html")
 	r.AddFromFiles("register_page", templatesDir + "/register.html", templatesDir + "/nav.html")
+	r.AddFromFiles("profile_page", templatesDir + "/profile.html", templatesDir + "/nav.html")
 	return r
 }

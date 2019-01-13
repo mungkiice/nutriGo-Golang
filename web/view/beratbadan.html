@@ -101,7 +101,7 @@
 </head>
 <body>
 
-{{template "nav"}}
+{{template "nav" .}}
 
 <div class="container">
     <div class="row">
@@ -114,10 +114,10 @@
                 <div class="row">
                     <div class="col-md-8">
                         <hr>
-                        {{/*<h3>Postur Tubuh Anda Tergolong <br> <strong>{{$data->kondisiBadan}}</strong></h3>*/}}
+                        <h3>Postur Tubuh Anda Tergolong <br> <strong>{{.kondisi}}</strong></h3>
                         <br>
 
-                        {{/*<h3>Berat Badan yang baik untuk anda <strong>{{$data->beratBadanIdeal}} kg</strong></h3>*/}}
+                        <h3>Berat Badan yang baik untuk anda <strong>{{.beratIdeal}} kg</strong></h3>
                     </div>
                 </div>
             </div>

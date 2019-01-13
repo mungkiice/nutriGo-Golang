@@ -2,10 +2,14 @@ package model
 
 type History struct{
 	Model
-	UserID		int
+	UserID		uint
 	User		User
-	PolaID		int
+	PolaID		uint
 	Pola		Pola
 	TinggiBadan	float64	`gorm:"type:double"`
 	BeratBadan	float64	`gorm:"type:double"`
+}
+
+func (History) TableName() string{
+	return "history"
 }
