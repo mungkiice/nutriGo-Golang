@@ -1,5 +1,4 @@
 package cmd
-
 import (
 	"github.com/mungkiice/goNutri/database/migration"
 	"github.com/spf13/cobra"
