@@ -36,7 +36,6 @@
   revision = "dc5246754963078ec815f6697f7075c0c0c7d86d"
 
 [[projects]]
-  branch = "master"
   digest = "1:36fe9527deed01d2a317617e59304eb2c4ce9f8a24115bcc5c2e37b3aee5bae4"
   name = "github.com/gin-contrib/sse"
   packages = ["."]
@@ -55,25 +54,6 @@
   pruneopts = "UT"
   revision = "b869fe1415e4b9eb52f247441830d502aece2d4d"
   version = "v1.3.0"
-
-[[projects]]
-  digest = "1:e1ff887e232b2d8f4f7c7db15a5fac7be418025afc4dda53c59c765dbb5aa6b4"
-  name = "github.com/go-playground/locales"
-  packages = [
-    ".",
-    "currency",
-  ]
-  pruneopts = "UT"
-  revision = "f63010822830b6fe52288ee52d5a1151088ce039"
-  version = "v0.12.1"
-
-[[projects]]
-  digest = "1:e022cf244bcac1b6ef933f1a2e0adcf6a6dfd7b872d8d41e4d4179bb09a87cbc"
-  name = "github.com/go-playground/universal-translator"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "b32fa301c9fe55953584134cb6853a13c87ec0a1"
-  version = "v0.16.0"
 
 [[projects]]
   digest = "1:ec6f9bf5e274c833c911923c9193867f3f18788c461f76f05f62bb1510e0ae65"
@@ -186,14 +166,6 @@
   pruneopts = "UT"
   revision = "7fd9f68ece0bcb1a905fac8f1549f0083f71c51b"
   version = "v0.2.8"
-
-[[projects]]
-  digest = "1:6782ffc812e8e700e6952ede1e60487ff1fd9da489eff762985be662a7cfc431"
-  name = "github.com/leodido/go-urn"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "70078a794e8ea4b497ba7c19a78cd60f90ccf0f4"
-  version = "v1.1.0"
 
 [[projects]]
   digest = "1:c568d7727aa262c32bdf8a3f7db83614f7af0ed661474b24588de635c20024c7"
@@ -326,15 +298,15 @@
     "blowfish",
   ]
   pruneopts = "UT"
-  revision = "ff983b9c42bc9fbf91556e191cc8efb585c16908"
+  revision = "057139ce5d2bdbe6fe73c53679e24e9cf007f637"
 
 [[projects]]
   branch = "master"
-  digest = "1:f6f6d9d6f80c9e32acc0f4f3b904e0b9f5b18a7757c2ef941121bd79a10e7bdf"
+  digest = "1:db12953ac7a80656b159265fe13146959beaada45938a532f484a3aeb289462e"
   name = "golang.org/x/sys"
   packages = ["unix"]
   pruneopts = "UT"
-  revision = "11f53e03133963fb11ae0588e08b5e0b85be8be5"
+  revision = "b90733256f2e882e81d52f9126de08df5615afd9"
 
 [[projects]]
   digest = "1:8029e9743749d4be5bc9f7d42ea1659471767860f0cdc34d37c3111bd308a295"
@@ -368,20 +340,11 @@
   version = "v8.18.1"
 
 [[projects]]
-  digest = "1:85d4b76b833a0d3d1f5950a1ffbae503908f19af397ea329e6517bfc3edeabc3"
-  name = "gopkg.in/go-playground/validator.v9"
-  packages = ["."]
-  pruneopts = "UT"
-  revision = "cdd5c28d217804eec51fa694927e6c57465748f6"
-  version = "v9.25.0"
-
-[[projects]]
-  digest = "1:4d2e5a73dc1500038e504a8d78b986630e3626dc027bc030ba5c75da257cdb96"
+  digest = "1:cacb98d52c60c337c2ce95a7af83ba0313a93ce5e73fa9e99a96aff70776b9d3"
   name = "gopkg.in/yaml.v2"
   packages = ["."]
   pruneopts = "UT"
-  revision = "51d6538a90f86fe93ac480b35f37b2be17fef232"
-  version = "v2.2.2"
+  revision = "a5b47d31c556af34a302ce5d659e6fea44d90de0"
 
 [solve-meta]
   analyzer-name = "dep"
@@ -391,6 +354,7 @@
     "github.com/gin-contrib/sessions",
     "github.com/gin-contrib/sessions/cookie",
     "github.com/gin-gonic/gin",
+    "github.com/gin-gonic/gin/binding",
     "github.com/icrowley/fake",
     "github.com/jinzhu/gorm",
     "github.com/jinzhu/gorm/dialects/mysql",
@@ -399,7 +363,7 @@
     "github.com/spf13/viper",
     "github.com/unrolled/secure",
     "golang.org/x/crypto/bcrypt",
-    "gopkg.in/go-playground/validator.v9",
+    "gopkg.in/go-playground/validator.v8",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1
