@@ -11,7 +11,7 @@ var appCmd = &cobra.Command{
 	Short: "Run app",
 	Long: `You can migrate, refresh, rollback, or even seed your database using commands`,
 	Run: func(cmd *cobra.Command, args []string) {
-		if err := route.NewRouter().Run(":8000"); err != nil {
+		if err := route.Run(); err != nil {
 			log.Fatal(err)
 		}
 	},

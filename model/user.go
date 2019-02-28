@@ -4,15 +4,15 @@ import "golang.org/x/crypto/bcrypt"
 
 type User struct{
 	Model
-	Nama		string		`gorm:"type:varchar(191);not_null"`
-	Email		string		`gorm:"type:varchar(191);unique;not_null"`
-	Password	string		`gorm:"type:varchar(191);not_null"`
-	Gender		string		`gorm:"type:varchar(191)" sql:"type:ENUM('laki-laki','perempuan')"`
-	TinggiBadan	float64		`gorm:"type:double"`
-	BeratBadan	float64		`gorm:"type:double"`
-	Usia		int			`gorm:"type:int(11)"`
-	IsAdmin		bool		`gorm:"type:tinyint(1);default:0"`
-	Histories	[]History
+	Nama		string		`json:"nama" gorm:"type:varchar(191);not_null"`
+	Email		string		`json:"" gorm:"type:varchar(191);unique;not_null"`
+	Password	string		`json:"-" gorm:"type:varchar(191);not_null"`
+	Gender		string		`json:"" gorm:"type:varchar(191)" sql:"type:ENUM('laki-laki','perempuan')"`
+	TinggiBadan	float64		`json:"" gorm:"type:double"`
+	BeratBadan	float64		`json:"" gorm:"type:double"`
+	Usia		int			`json:"" gorm:"type:int(11)"`
+	IsAdmin		bool		`json:"-" gorm:"type:tinyint(1);default:0"`
+	Histories	[]History	`json:"-"`
 }
 
 func (User) TableName() string {
