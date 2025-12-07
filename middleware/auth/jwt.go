@@ -2,28 +2,28 @@ package auth
 
 import (
 	"fmt"
-	"github.com/dgrijalva/jwt-go"
-	"github.com/gin-gonic/gin"
-	"github.com/mungkiice/goNutri/model"
-	"github.com/spf13/viper"
 	"log"
 	"net/http"
 	"strings"
 	"time"
+
+	"github.com/dgrijalva/jwt-go"
+	"github.com/gin-gonic/gin"
+	"github.com/mungkiice/nutriGo-Golang/model"
+	"github.com/spf13/viper"
 )
 
-func GenerateToken(user *model.User) (string, error){
+func GenerateToken(user *model.User) (string, error) {
 	viper.SetConfigFile("./config.json")
 	if err := viper.ReadInConfig(); err != nil {
 		log.Fatal(err)
 	}
 
-
 	// Create a new token object, specifying signing method and the claims
 	// you would like it to contain.
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"userID": user.ID,
-		"exp":     time.Now().Add(time.Hour * 8760).Unix(),
+		"exp":    time.Now().Add(time.Hour * 8760).Unix(),
 	})
 
 	// Sign and get the complete encoded token as a string using the secret
@@ -32,7 +32,7 @@ func GenerateToken(user *model.User) (string, error){
 	return tokenString, err
 }
 
-func VerifyToken() gin.HandlerFunc{
+func VerifyToken() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		viper.SetConfigFile("./config.json")
 		if err := viper.ReadInConfig(); err != nil {
@@ -66,7 +66,7 @@ func VerifyToken() gin.HandlerFunc{
 
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{
-				"error" : "invalid token",
+				"error": "invalid token",
 			})
 			c.Abort()
 			return
@@ -82,7 +82,7 @@ func VerifyToken() gin.HandlerFunc{
 			return
 		}
 
-		if !claims.VerifyExpiresAt(time.Now().Unix(), true){
+		if !claims.VerifyExpiresAt(time.Now().Unix(), true) {
 			c.JSON(http.StatusBadRequest, gin.H{
 				"error": "invalid token : token expired",
 			})

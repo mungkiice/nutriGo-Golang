@@ -1,28 +1,29 @@
 package web
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/mungkiice/goNutri/middleware/auth"
-	. "github.com/mungkiice/goNutri/model"
 	"math"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
+	"github.com/mungkiice/nutriGo-Golang/middleware/auth"
+	. "github.com/mungkiice/nutriGo-Golang/model"
 )
 
-func BeratBadanPage(c *gin.Context){
+func BeratBadanPage(c *gin.Context) {
 	user := auth.User(c)
 	result := getKondisi(user)
 	c.HTML(http.StatusOK, "beratbadan_page", gin.H{
-		"user": user,
+		"user":       user,
 		"isLoggedIn": true,
-		"kondisi": result["kondisi"],
+		"kondisi":    result["kondisi"],
 		"beratIdeal": result["beratIdeal"],
 	})
 }
 
-func getKondisi(user *User)map[string]interface{}{
+func getKondisi(user *User) map[string]interface{} {
 	berat := user.BeratBadan
 	tinggi := user.TinggiBadan
-	imt := berat / math.Pow((tinggi / 100),2)
+	imt := berat / math.Pow((tinggi/100), 2)
 	var kondisi string
 	switch {
 	case imt < 17:
@@ -39,7 +40,7 @@ func getKondisi(user *User)map[string]interface{}{
 
 	beratIdeal := 0.9 * (tinggi - 100)
 	return map[string]interface{}{
-		"kondisi": kondisi,
+		"kondisi":    kondisi,
 		"beratIdeal": beratIdeal,
 	}
 }

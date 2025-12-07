@@ -2,28 +2,29 @@ package web
 
 import (
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"github.com/mungkiice/goNutri/middleware/auth"
-	. "github.com/mungkiice/goNutri/model"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
+	"github.com/mungkiice/nutriGo-Golang/middleware/auth"
+	. "github.com/mungkiice/nutriGo-Golang/model"
 )
 
-func NutrisiPage(c *gin.Context){
+func NutrisiPage(c *gin.Context) {
 	user := auth.User(c)
 
 	c.HTML(http.StatusOK, "nutrisi_page", gin.H{
-		"user" : user,
-		"isLoggedIn" : true,
-		"data": getNutrisi(user),
+		"user":       user,
+		"isLoggedIn": true,
+		"data":       getNutrisi(user),
 	})
 }
 
-func getNutrisi(user *User)map[string]interface{}{
+func getNutrisi(user *User) map[string]interface{} {
 	beratIdeal := getKondisi(user)["beratIdeal"]
 	var kebutuhanBasal float64
 	if user.Gender == "laki-laki" {
 		kebutuhanBasal = beratIdeal.(float64) * 30
-	}else{
+	} else {
 		kebutuhanBasal = beratIdeal.(float64) * 25
 	}
 
@@ -47,13 +48,13 @@ func getNutrisi(user *User)map[string]interface{}{
 	maxKarbo := (totalKaloriPerhari * 75 / 100) / 4
 
 	return map[string]interface{}{
-		"kebutuhanBasal": fmt.Sprintf("%.2f", kebutuhanBasal),
+		"kebutuhanBasal":     fmt.Sprintf("%.2f", kebutuhanBasal),
 		"totalKaloriPerhari": fmt.Sprintf("%.2f", totalKaloriPerhari),
-		"minProtein": fmt.Sprintf("%.2f", minProtein),
-		"maxProtein": fmt.Sprintf("%.2f", maxProtein),
-		"minLemak": fmt.Sprintf("%.2f", minLemak),
-		"maxLemak": fmt.Sprintf("%.2f", maxLemak),
-		"minKarbo": fmt.Sprintf("%.2f", minKarbo),
-		"maxKarbo": fmt.Sprintf("%.2f", maxKarbo),
+		"minProtein":         fmt.Sprintf("%.2f", minProtein),
+		"maxProtein":         fmt.Sprintf("%.2f", maxProtein),
+		"minLemak":           fmt.Sprintf("%.2f", minLemak),
+		"maxLemak":           fmt.Sprintf("%.2f", maxLemak),
+		"minKarbo":           fmt.Sprintf("%.2f", minKarbo),
+		"maxKarbo":           fmt.Sprintf("%.2f", maxKarbo),
 	}
 }

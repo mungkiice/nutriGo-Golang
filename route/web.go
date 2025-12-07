@@ -1,20 +1,21 @@
 package route
 
 import (
+	"log"
+
 	"github.com/gin-contrib/multitemplate"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
-	"github.com/mungkiice/goNutri/handler/web"
-	"github.com/mungkiice/goNutri/middleware"
-	"github.com/mungkiice/goNutri/middleware/auth"
+	"github.com/mungkiice/nutriGo-Golang/handler/web"
+	"github.com/mungkiice/nutriGo-Golang/middleware"
+	"github.com/mungkiice/nutriGo-Golang/middleware/auth"
 	"github.com/spf13/viper"
-	"log"
 )
 
 var router *gin.Engine
 
-func Run() error{
+func Run() error {
 	router = gin.Default()
 
 	viper.SetConfigFile("./config.json")
@@ -39,7 +40,7 @@ func Run() error{
 	return router.Run(":8000")
 }
 
-func loadWebRoute(){
+func loadWebRoute() {
 	router.GET("/", web.HomePage)
 	router.GET("/polamakan", auth.Web(), web.PolaMakanPage)
 	router.GET("/nutrisi", auth.Web(), web.NutrisiPage)
@@ -57,13 +58,13 @@ func loadWebRoute(){
 
 func loadTemplates(templatesDir string) multitemplate.Renderer {
 	r := multitemplate.NewRenderer()
-	r.AddFromFiles("home_page", templatesDir + "/home.html", templatesDir + "/nav.html")
-	r.AddFromFiles("polamakan_page", templatesDir + "/polamakan.html", templatesDir + "/nav.html")
-	r.AddFromFiles("nutrisi_page", templatesDir + "/nutrisi.html", templatesDir + "/nav.html")
-	r.AddFromFiles("beratbadan_page", templatesDir + "/beratbadan.html", templatesDir + "/nav.html")
-	r.AddFromFiles("mainform_page", templatesDir + "/main-form.html", templatesDir + "/nav.html")
-	r.AddFromFiles("login_page", templatesDir + "/login.html", templatesDir + "/nav.html")
-	r.AddFromFiles("register_page", templatesDir + "/register.html", templatesDir + "/nav.html")
-	r.AddFromFiles("profile_page", templatesDir + "/profile.html", templatesDir + "/nav.html")
+	r.AddFromFiles("home_page", templatesDir+"/home.html", templatesDir+"/nav.html")
+	r.AddFromFiles("polamakan_page", templatesDir+"/polamakan.html", templatesDir+"/nav.html")
+	r.AddFromFiles("nutrisi_page", templatesDir+"/nutrisi.html", templatesDir+"/nav.html")
+	r.AddFromFiles("beratbadan_page", templatesDir+"/beratbadan.html", templatesDir+"/nav.html")
+	r.AddFromFiles("mainform_page", templatesDir+"/main-form.html", templatesDir+"/nav.html")
+	r.AddFromFiles("login_page", templatesDir+"/login.html", templatesDir+"/nav.html")
+	r.AddFromFiles("register_page", templatesDir+"/register.html", templatesDir+"/nav.html")
+	r.AddFromFiles("profile_page", templatesDir+"/profile.html", templatesDir+"/nav.html")
 	return r
 }

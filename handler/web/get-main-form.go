@@ -1,15 +1,16 @@
 package web
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/mungkiice/goNutri/middleware/auth"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
+	"github.com/mungkiice/nutriGo-Golang/middleware/auth"
 )
 
-func MainFormPage(c *gin.Context){
+func MainFormPage(c *gin.Context) {
 	user := auth.User(c)
 	c.HTML(http.StatusOK, "mainform_page", gin.H{
-		"user" : user,
-		"isLoggedIn" : true,
+		"user":       user,
+		"isLoggedIn": true,
 	})
 }

@@ -1,12 +1,13 @@
 package migration
 
 import (
-	. "github.com/mungkiice/goNutri/database"
-	"github.com/mungkiice/goNutri/model"
 	"log"
+
+	. "github.com/mungkiice/nutriGo-Golang/database"
+	"github.com/mungkiice/nutriGo-Golang/model"
 )
 
-func Down(){
+func Down() {
 	if DB.HasTable(&model.User{}) {
 		DB.DropTable(&model.User{})
 	}

@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/mungkiice/goNutri/database/seed"
+	"github.com/mungkiice/nutriGo-Golang/database/seed"
 	"github.com/spf13/cobra"
 )
 
@@ -14,6 +14,6 @@ var seedCmd = &cobra.Command{
 	},
 }
 
-func init(){
+func init() {
 	rootCmd.AddCommand(seedCmd)
 }

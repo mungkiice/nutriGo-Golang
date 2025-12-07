@@ -1,11 +1,12 @@
 package auth
 
 import (
+	"net/http"
+
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
-	"github.com/mungkiice/goNutri/database"
-	"github.com/mungkiice/goNutri/model"
-	"net/http"
+	"github.com/mungkiice/nutriGo-Golang/database"
+	"github.com/mungkiice/nutriGo-Golang/model"
 )
 
 func Web() gin.HandlerFunc {
@@ -16,34 +17,34 @@ func Web() gin.HandlerFunc {
 			//c.Set("redirectUrl", c.Request.URL.Path)
 			c.Redirect(http.StatusTemporaryRedirect, "/login")
 			c.Abort()
-		}else{
+		} else {
 			c.Set("userID", userID)
 			c.Next()
 		}
 	}
 }
 
-func Guest() gin.HandlerFunc{
+func Guest() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		s := sessions.Default(c)
 		if s.Get("userID") != nil {
 			c.Redirect(http.StatusTemporaryRedirect, "/")
 			c.Abort()
-		}else{
+		} else {
 			c.Next()
 		}
 	}
 }
 
-func User(c *gin.Context) *model.User{
+func User(c *gin.Context) *model.User {
 	var user model.User
 	userID := sessions.Default(c).Get("userID")
-	if  userID != nil {
-		if err := database.DB.First(&user, userID.(uint)).Error; err != nil{
+	if userID != nil {
+		if err := database.DB.First(&user, userID.(uint)).Error; err != nil {
 			//log.Fatal(err)
 			return nil
 		}
-	}else{
+	} else {
 		return nil
 	}
 	return &user

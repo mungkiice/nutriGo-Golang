@@ -1,6 +1,7 @@
 package cmd
+
 import (
-	"github.com/mungkiice/goNutri/database/migration"
+	"github.com/mungkiice/nutriGo-Golang/database/migration"
 	"github.com/spf13/cobra"
 )
 
@@ -13,6 +14,6 @@ var refreshCmd = &cobra.Command{
 	},
 }
 
-func init(){
+func init() {
 	rootCmd.AddCommand(refreshCmd)
 }

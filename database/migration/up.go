@@ -1,12 +1,13 @@
 package migration
 
 import (
-	. "github.com/mungkiice/goNutri/database"
-	"github.com/mungkiice/goNutri/model"
 	"log"
+
+	. "github.com/mungkiice/nutriGo-Golang/database"
+	"github.com/mungkiice/nutriGo-Golang/model"
 )
 
-func Up(){
+func Up() {
 	db := DB.AutoMigrate(
 		&model.User{},
 		&model.Makanan{},
@@ -15,7 +16,7 @@ func Up(){
 		&model.History{})
 	if err := db.Error; err != nil {
 		log.Println("An Error has occured", err)
-	}else{
+	} else {
 		log.Println("Database has been updated")
 	}
 }

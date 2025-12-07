@@ -1,6 +1,6 @@
 package main
 
-import "github.com/mungkiice/goNutri/cmd"
+import "github.com/mungkiice/nutriGo-Golang/cmd"
 
 func main() {
 	//if err := route.NewRouter().Run(":8000"); err != nil {

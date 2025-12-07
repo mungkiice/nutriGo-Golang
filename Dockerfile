@@ -3,8 +3,8 @@
 # Stage 1 (to create a "build" image, ~850MB)
 FROM golang:1.11-alpine3.8 AS builder
 
-COPY . /go/src/github.com/mungkiice/goNutri/
-WORKDIR /go/src/github.com/mungkiice/goNutri/
+COPY . /go/src/github.com/mungkiice/nutriGo-Golang/
+WORKDIR /go/src/github.com/mungkiice/nutriGo-Golang/
 RUN apk update && apk add --no-cache git
 RUN go get github.com/golang/dep/cmd/dep
 RUN dep ensure -v
@@ -22,9 +22,9 @@ FROM scratch
 # Author : Muhammad Iqbal Kurniawan
 MAINTAINER Muhammad Iqbal Kurniawan  <m.kurniawanibal@gmail.com>
 WORKDIR /root/
-COPY --from=builder /go/src/github.com/mungkiice/goNutri/web ./web
-COPY --from=builder /go/src/github.com/mungkiice/goNutri/config.json .
-COPY --from=builder /go/src/github.com/mungkiice/goNutri/main.sh .
+COPY --from=builder /go/src/github.com/mungkiice/nutriGo-Golang/web ./web
+COPY --from=builder /go/src/github.com/mungkiice/nutriGo-Golang/config.json .
+COPY --from=builder /go/src/github.com/mungkiice/nutriGo-Golang/main.sh .
 
 EXPOSE 8000
 ENTRYPOINT ["./main.sh"]

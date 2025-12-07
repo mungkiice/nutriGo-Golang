@@ -1,19 +1,20 @@
 package web
 
 import (
-	"github.com/gin-gonic/gin"
-	. "github.com/mungkiice/goNutri/database"
-	"github.com/mungkiice/goNutri/middleware/auth"
 	"log"
 	"net/http"
+
+	"github.com/gin-gonic/gin"
+	. "github.com/mungkiice/nutriGo-Golang/database"
+	"github.com/mungkiice/nutriGo-Golang/middleware/auth"
 )
 
 type formRequest struct {
 	Tinggi float64 `form:"tinggi_badan" json:"tinggi_badan" binding:"required"`
-	Berat float64 `form:"berat_badan" json:"berat_badan" binding:"required"`
+	Berat  float64 `form:"berat_badan" json:"berat_badan" binding:"required"`
 }
 
-func UpdateTinggiBadan(c *gin.Context){
+func UpdateTinggiBadan(c *gin.Context) {
 	var req formRequest
 	user := auth.User(c)
 
@@ -21,11 +22,11 @@ func UpdateTinggiBadan(c *gin.Context){
 		switch c.GetHeader("Content-Type") {
 		case "application/json":
 			c.JSON(http.StatusBadRequest, gin.H{
-				"error" : err.Error(),
+				"error": err.Error(),
 			})
 		case "application/xml":
 			c.XML(http.StatusBadRequest, gin.H{
-				"error" : err.Error(),
+				"error": err.Error(),
 			})
 		default:
 			//err = c.AbortWithError(http.StatusBadRequest, err).SetType(gin.ErrorTypeBind)
@@ -38,16 +39,15 @@ func UpdateTinggiBadan(c *gin.Context){
 			//c.Set("errors", err.Error())
 			//c.Redirect(http.StatusMovedPermanently, "/register")
 			c.JSON(http.StatusBadRequest, gin.H{
-				"error" : err.Error(),
+				"error": err.Error(),
 			})
 		}
 		return
 	}
 
 	if err := DB.Model(user).Updates(map[string]interface{}{
-		"tinggi_badan" : req.Tinggi,
-		"berat_badan" : req.Berat,
-
+		"tinggi_badan": req.Tinggi,
+		"berat_badan":  req.Berat,
 	}).Error; err != nil {
 		log.Fatal(err)
 	}

@@ -1,20 +1,20 @@
 package web
 
 import (
+	"log"
+	"net/http"
+
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"github.com/jinzhu/gorm"
-	. "github.com/mungkiice/goNutri/database"
-	. "github.com/mungkiice/goNutri/model"
-	"log"
-	"net/http"
+	. "github.com/mungkiice/nutriGo-Golang/database"
+	. "github.com/mungkiice/nutriGo-Golang/model"
 )
 
 type loginRequest struct {
 	Email string `form:"email" json:"email" binding:"required,email"`
-	Pass string `form:"password" json:"password" binding:"required"`
+	Pass  string `form:"password" json:"password" binding:"required"`
 }
-
 
 //func exists(
 //	v *validator.Validate, topStruct reflect.Value, currentStructOrField reflect.Value,
@@ -40,15 +40,15 @@ func DoLogin(c *gin.Context) {
 	//	}
 	//}
 
-	if err := c.ShouldBind(&req); err != nil{
+	if err := c.ShouldBind(&req); err != nil {
 		switch c.GetHeader("Content-Type") {
 		case "application/json":
 			c.JSON(http.StatusBadRequest, gin.H{
-				"error" : err.Error(),
+				"error": err.Error(),
 			})
 		case "application/xml":
 			c.XML(http.StatusBadRequest, gin.H{
-				"error" : err.Error(),
+				"error": err.Error(),
 			})
 		default:
 			//err = c.AbortWithError(http.StatusBadRequest, err).SetType(gin.ErrorTypeBind)
@@ -59,7 +59,7 @@ func DoLogin(c *gin.Context) {
 			//	"errors" : err.Error(),
 			//})
 			c.JSON(http.StatusBadRequest, gin.H{
-				"error" : err.Error(),
+				"error": err.Error(),
 			})
 			//c.Set("errors", err.Error())
 			//c.Redirect(http.StatusMovedPermanently, "/login")
@@ -67,8 +67,7 @@ func DoLogin(c *gin.Context) {
 		return
 	}
 
-	if err := DB.First(&user, "email = ?", req.Email).Error;
-		err == gorm.ErrRecordNotFound {
+	if err := DB.First(&user, "email = ?", req.Email).Error; err == gorm.ErrRecordNotFound {
 		log.Println("user not found")
 	} else if err != nil {
 		log.Fatal(err)
